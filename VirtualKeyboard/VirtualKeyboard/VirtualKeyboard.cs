@@ -25,25 +25,24 @@ namespace VirtualKeyboard
             isLettersBlock = true;
             additionalUserKeysCount = 21;
             additionalUserKeys = @"`~!@#$%^&*()-_=+/?><.";
-            this.CurrentLanguage = Language.English;
+            CurrentLanguage = Language.English;
         }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса VirtualKeyboard, задающий набор дополнительных клавиш.
         /// </summary>
-        /// <param name="additionalKeys">Массив дополнительных клавиш. Максимум 18 доп. клавиш. 
-        /// Если в массиве больше клавиш, то будут учитываться только первые 18.</param>
+        /// <param name="additionalKeys">Массив дополнительных клавиш. 21 клавиша.</param>
         public VirtualKeyboard(string additionalKeys) : this()
         {
             AdditionalUserKeys = additionalKeys;
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса VirtualKeyboard, указывает наличие цифрового блока отдельным рядом.
+        /// Инициализирует новый экземпляр класса VirtualKeyboard, 
+        /// задающий набор дополнительных клавиш и указывает наличие цифрового блока отдельным рядом.
         /// </summary>
         /// <param name="separateNumericBlock">true для отдельного блока, false для совмещения с верхним рядом.</param>
-        /// <param name="additionalKeys">Массив дополнительных клавиш. Максимум 18 доп. клавиш. 
-        /// Если в массиве больше клавиш, то будут учитываться только первые 18.</param>
+        /// <param name="additionalKeys">Массив дополнительных клавиш. 21 клавиша.</param>
         public VirtualKeyboard(bool separateNumericBlock, string additionalKeys) : this()
         {
             AdditionalUserKeys = additionalKeys;
@@ -90,7 +89,7 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
-        /// Возвращает массив дополнительных клавиш. 21 символ.
+        /// Возвращает или задает набор дополнительных клавиш. 21 символ.
         /// </summary>
         public string AdditionalUserKeys
         {
@@ -427,7 +426,7 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
-        /// Происходит отмене последнего действия.
+        /// Происходит при отмене последнего действия.
         /// </summary>
         public event EventHandler<ChangeTextEventArgs> UndoText;
 
