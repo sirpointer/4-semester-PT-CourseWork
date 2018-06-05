@@ -31,7 +31,7 @@ namespace VirtualKeyboard
         /// <summary>
         /// Инициализирует новый экземпляр класса VirtualKeyboard, задающий набор дополнительных клавиш.
         /// </summary>
-        /// <param name="additionalKeys">Массив дополнительных клавиш. 21 клавиша.</param>
+        /// <param name="additionalKeys">Набор дополнительных клавиш. 21 клавиша.</param>
         public VirtualKeyboard(string additionalKeys) : this()
         {
             AdditionalUserKeys = additionalKeys;
@@ -42,7 +42,7 @@ namespace VirtualKeyboard
         /// задающий набор дополнительных клавиш и указывает наличие цифрового блока отдельным рядом.
         /// </summary>
         /// <param name="separateNumericBlock">true для отдельного блока, false для совмещения с верхним рядом.</param>
-        /// <param name="additionalKeys">Массив дополнительных клавиш. 21 клавиша.</param>
+        /// <param name="additionalKeys">Набор дополнительных клавиш. 21 клавиша.</param>
         public VirtualKeyboard(bool separateNumericBlock, string additionalKeys) : this()
         {
             AdditionalUserKeys = additionalKeys;
