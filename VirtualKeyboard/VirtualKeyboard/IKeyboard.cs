@@ -10,6 +10,8 @@ namespace VirtualKeyboard
 
         void Undo(string value);
 
+        void BackSpace(int count);
+
         Color KeyColor { get; set; }
 
         Color KeyForeColor { get; set; }

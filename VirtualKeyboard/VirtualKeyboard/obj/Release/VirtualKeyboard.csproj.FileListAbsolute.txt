@@ -1,0 +1,9 @@
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\bin\Release\VirtualKeyboard.dll
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\bin\Release\VirtualKeyboard.pdb
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.csprojAssemblyReference.cache
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.Properties.Resources.resources
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.VirtualKeyboard.resources
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.csproj.GenerateResource.cache
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.csproj.CoreCompileInputs.cache
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.dll
+C:\Users\sirpo\OneDrive\VirtualKeyboard\VirtualKeyboard\obj\Release\VirtualKeyboard.pdb

@@ -115,7 +115,7 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
-        /// Возвращает или задает имена элементов, в которые будет транслироваться текст.
+        /// Возвращает или задает элементы, с которыми будет работать VirtualKeyboard.
         /// </summary>
         public List<object> SubscribeControls { get; set; } = new List<object>();
 
@@ -138,6 +138,7 @@ namespace VirtualKeyboard
 
         /// <summary>
         /// Возвращает или задает значение, указывающее выбран ли пользовательский блок дополнительных клавиш.
+        /// Отображается при свойстве IsLetterBlock равным false.
         /// true пользовательский блок, false стандартный.
         /// </summary>
         public bool IsUserAdditionalBlock { get => isUserAdditionalBlock; set => isUserAdditionalBlock = value; }
@@ -316,9 +317,7 @@ namespace VirtualKeyboard
             foreach (var control in SubscribeControls)
             {
                 if (control is TextBox)
-                {
                     (control as TextBox).Text += value;
-                }
                 else if (control is Label)
                     (control as Label).Text += value;
                 else if (control is RichTextBox)
@@ -330,6 +329,38 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
+        /// Удаляет символы из конца подписанных элементов в количестве <paramref name="count"/>
+        /// </summary>
+        /// <param name="count">Колличество символов, которое нужно удалить.</param>
+        public void BackSpace(int count = 1)
+        {
+            foreach (var control in SubscribeControls)
+            {
+                if (control == null)
+                    throw new Exception("Подписанный элемент указывает на null.");
+
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    if (textBox.Text.Length > 0)
+                        textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1, count);
+                }
+                else if (control is RichTextBox)
+                {
+                    RichTextBox rich = control as RichTextBox;
+                    if (rich.Text.Length > 0)
+                        rich.Text = rich.Text.Remove(rich.Text.Length - 1, count);
+                }
+                else if (control is Label)
+                {
+                    Label label = control as Label;
+                    if (label.Text.Length > 0)
+                        label.Text = label.Text.Remove(label.Text.Length - 1, count);
+                }
+            }
+        }
+
+        /// <summary>
         /// Удаляет последние введенные символы.
         /// </summary>
         public void Undo()
@@ -338,9 +369,10 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
-        /// Удаляет символы из конца подписанных элементов.
+        /// Удаляет символы из конца элементов, с которыми работает данный экземпляр VirtualKeyboarb, 
+        /// если конец текста этого элемента совпадает с <paramref name="value"/>.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Сторока, которую нужно удалить.</param>
         public void Undo(string value)
         {
             if (string.IsNullOrEmpty(value))
@@ -377,7 +409,7 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
-        /// Удаляет элемент из списка подписанных элементов (ControlNames).
+        /// Удаляет элемент с именем <paramref name="controlName"/> из списка подписанных элементов (ControlNames).
         /// </summary>
         /// <param name="controlName">Имя элемента.</param>
         public void RemoteControl(string controlName)
@@ -695,6 +727,12 @@ namespace VirtualKeyboard
             Controls.Add(GetAdditionalKey("ABC", x, y, true));
             x += buttonSize.Width + distanceBetweenKeys;
             Controls.Add(GetSpace(x, y, (buttonSize.Width + distanceBetweenKeys) * 6 - distanceBetweenKeys));
+
+            if (IsUserAdditionalBlock)
+            {
+                CheckBox switcher = Controls.Find("switcerCheckBox", false).First() as CheckBox ?? throw new Exception("Switcher не найден");
+                switcher.Checked = true;
+            }
         }
 
         #region Making Num Block
@@ -983,6 +1021,12 @@ namespace VirtualKeyboard
 
         private void AdditionalKey_Click(object sender, EventArgs e)
         {
+            if (!IsLettersBlock)
+            {
+                CheckBox switcher = Controls.Find("switcerCheckBox", false).First() as CheckBox ?? throw new Exception("Switcher не найден");
+                IsUserAdditionalBlock = false;
+            }
+
             IsLettersBlock = !IsLettersBlock;
         }
 
@@ -1139,7 +1183,7 @@ namespace VirtualKeyboard
         private void Backspace_Click(object sender, EventArgs e)
         {
             if (sender != null)
-                Undo();
+                BackSpace();
         }
 
         #endregion
