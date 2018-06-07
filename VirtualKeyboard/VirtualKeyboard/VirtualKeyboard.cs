@@ -347,8 +347,8 @@ namespace VirtualKeyboard
                     if (textBox.Text.Length > 0)
                     {
                         string str = textBox.Text;
-                        textBox.Text = str.Remove(str.Length - count - 1, count);
-                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count - 1, count)));
+                        textBox.Text = str.Remove(str.Length - count, count);
+                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count, count)));
                     }
                 }
                 else if (control is RichTextBox)
@@ -357,8 +357,8 @@ namespace VirtualKeyboard
                     if (rich.Text.Length > 0)
                     {
                         string str = rich.Text;
-                        rich.Text = str.Remove(str.Length - count - 1, count);
-                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count - 1, count)));
+                        rich.Text = str.Remove(str.Length - count, count);
+                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count, count)));
                     }
                 }
                 else if (control is Label)
@@ -367,8 +367,8 @@ namespace VirtualKeyboard
                     if (label.Text.Length > 0)
                     {
                         string str = label.Text;
-                        label.Text = str.Remove(str.Length - count - 1, count);
-                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count - 1, count)));
+                        label.Text = str.Remove(str.Length - count, count);
+                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count, count)));
                     }
                 }
             }
