@@ -116,6 +116,8 @@ namespace VirtualKeyboard
 
         /// <summary>
         /// Возвращает или задает элементы, с которыми будет работать VirtualKeyboard.
+        /// Поддерживается TextBox, RichTextBox и Label.
+        /// С объектами другого типа виртуальная клавиатура работать не будет.
         /// </summary>
         public List<object> SubscribeControls { get; set; } = new List<object>();
 
@@ -343,19 +345,31 @@ namespace VirtualKeyboard
                 {
                     TextBox textBox = control as TextBox;
                     if (textBox.Text.Length > 0)
-                        textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1, count);
+                    {
+                        string str = textBox.Text;
+                        textBox.Text = str.Remove(str.Length - count - 1, count);
+                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count - 1, count)));
+                    }
                 }
                 else if (control is RichTextBox)
                 {
                     RichTextBox rich = control as RichTextBox;
                     if (rich.Text.Length > 0)
-                        rich.Text = rich.Text.Remove(rich.Text.Length - 1, count);
+                    {
+                        string str = rich.Text;
+                        rich.Text = str.Remove(str.Length - count - 1, count);
+                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count - 1, count)));
+                    }
                 }
                 else if (control is Label)
                 {
                     Label label = control as Label;
                     if (label.Text.Length > 0)
-                        label.Text = label.Text.Remove(label.Text.Length - 1, count);
+                    {
+                        string str = label.Text;
+                        label.Text = str.Remove(str.Length - count - 1, count);
+                        OnDelText(new ChangeTextEventArgs(str.Substring(str.Length - count - 1, count)));
+                    }
                 }
             }
         }
@@ -403,7 +417,7 @@ namespace VirtualKeyboard
                 }
             }
 
-            OnUndoText(new ChangeTextEventArgs(lastEnteredCharacters));
+            OnDelText(new ChangeTextEventArgs(lastEnteredCharacters));
 
             lastEnteredCharacters = "";
         }
@@ -419,7 +433,8 @@ namespace VirtualKeyboard
 
             for (int i = 0; i < SubscribeControls.Count; i++)
             {
-                if ((SubscribeControls[i] as Control).Name.Equals(controlName))
+                string name = (SubscribeControls[i] as Control ?? throw new Exception("controlName не унаследован от класса Control")).Name;
+                if (name.Equals(controlName))
                 {
                     SubscribeControls.RemoveAt(i);
                     break;
@@ -458,16 +473,16 @@ namespace VirtualKeyboard
         }
 
         /// <summary>
-        /// Происходит при отмене последнего действия.
+        /// Происходит при отмене последнего действия или удалении символов из конца элементов.
         /// </summary>
-        public event EventHandler<ChangeTextEventArgs> UndoText;
+        public event EventHandler<ChangeTextEventArgs> DelText;
 
-        protected virtual void OnUndoText(ChangeTextEventArgs e)
+        protected virtual void OnDelText(ChangeTextEventArgs e)
         {
-            EventHandler<ChangeTextEventArgs> temp = UndoText;
+            EventHandler<ChangeTextEventArgs> temp = DelText;
 
             if (temp != null)
-                UndoText(this, e);
+                DelText(this, e);
         }
 
         /// <summary>
